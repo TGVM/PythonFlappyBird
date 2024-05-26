@@ -87,7 +87,7 @@ class Passaro:
         tela.blit(imagem_rotacionada, retangulo.topleft)
     
     def get_mask(self):
-        pygame.mask.from_surface(self.imagem)
+        return pygame.mask.from_surface(self.imagem)
 
 class Cano:
     DISTANCIA = 200
@@ -106,7 +106,7 @@ class Cano:
     def definir_altura(self):
         self.altura = random.randrange(50, 450)
         self.pos_topo = self.altura - self.CANO_TOPO.get_height()
-        self.base = self.altura + self.DISTANCIA
+        self.pos_base = self.altura + self.DISTANCIA
 
     def mover(self):
         self.x -= self.VELOCIDADE
@@ -146,9 +146,9 @@ class Chao:
         self.x1 -= self.VELOCIDADE
 
         if self.x0 + self.LARGURA < 0:
-            self.x0 = self.x0 + self.LARGURA
+            self.x0 = self.x1 + self.LARGURA
         if self.x1 + self.LARGURA < 0:
-            self.x1 = self.x1 + self.LARGURA
+            self.x1 = self.x0 + self.LARGURA
 
     def desenhar(self, tela):
         tela.blit(self.IMAGEM, (self.x0, self.y))
@@ -170,7 +170,7 @@ def main():
     passaros = [Passaro(230, 350)]
     chao = Chao(730)
     canos = [Cano(700)]
-    tela = pygame.display.set_mode(TELA_LARGURA, TELA_ALTURA)
+    tela = pygame.display.set_mode((TELA_LARGURA, TELA_ALTURA))
     pontos = 0
     relogio = pygame.time.Clock()
 
@@ -220,3 +220,6 @@ def main():
 
 
         desenhar_tela(tela, passaros, canos, chao, pontos)
+
+if __name__ == '__main__':
+    main()
